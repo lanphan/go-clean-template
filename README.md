@@ -15,6 +15,19 @@ The purpose of the template is to show:
 
 Using the principles of Robert Martin (aka Uncle Bob).
 
+## Prequisitions
+Need to install these tools first:
+1. Docker and docker-compose
+2. Golang **v1.18+**
+3. Golang-migrate tool
+   ```brew install golang-migrate```
+4. Golangci-lint tool
+   ```brew install golangci-lint```
+5. Hadolint tool
+   ```brew install hadolint```
+6. dotenv-linter tool
+   ```brew install dotenv-linter```
+
 ## What do we have in this template
 - [x] 1 Make script to run and provide other supports (document generation, lint, unit test ...)
 - [x] Github action to verify Pull Request + auto create new PR to upgrade packages
