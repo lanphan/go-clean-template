@@ -1,0 +1,97 @@
+basePath: /api/v1
+definitions:
+  entity.User:
+    properties:
+      claimStatus:
+        type: boolean
+      createdAt:
+        type: string
+      id:
+        type: integer
+      reward:
+        type: integer
+      walletAddress:
+        type: string
+    type: object
+  v1.createUserRequest:
+    properties:
+      address:
+        example: "0x321233"
+        type: string
+      reward:
+        type: integer
+    required:
+    - address
+    - reward
+    type: object
+  v1.response:
+    properties:
+      error:
+        example: message
+        type: string
+    type: object
+  v1.userListResponse:
+    properties:
+      user:
+        items:
+          $ref: '#/definitions/entity.User'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Using a translation service as an example
+  title: Go Clean Template API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Show all users
+      operationId: list-user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.userListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: List all users
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: Create new user
+      operationId: create-user
+      parameters:
+      - description: Create user
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/v1.createUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: Create user
+      tags:
+      - user
+swagger: "2.0"

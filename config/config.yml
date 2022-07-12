@@ -1,0 +1,18 @@
+app:
+  name: 'whydah-go-clean-template'
+  version: '0.0.1'
+
+http:
+  port: '8080'
+
+logger:
+  # zap config level
+  log_level: "info"
+  rollbar_env: 'go-clean-template'
+
+postgres:
+  db_name: "postgres"
+  host: "localhost"
+  port: "5432"
+  user: "user"
+  password: "pass"
