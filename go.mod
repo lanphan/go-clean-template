@@ -10,7 +10,7 @@ require (
 	github.com/swaggo/gin-swagger v1.5.1
 	github.com/swaggo/swag v1.8.4
 	github.com/upper/db/v4 v4.5.4
-	go.uber.org/zap v1.21.0
+	go.uber.org/zap v1.22.0
 )
 
 require (
