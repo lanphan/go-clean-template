@@ -28,6 +28,11 @@ swag-v1: ## swag init
 	swag init -g internal/controller/http/v1/router.go
 .PHONY: swag-v1
 
+build: ## build binary file
+	GOOS=linux GOARCH=amd64 \
+    go build -tags migrate -o ./bin/app ./cmd/app
+.PHONY: build
+
 run: swag-v1 ## swag then run
 	go mod tidy && go mod download && \
 	DISABLE_SWAGGER_HTTP_HANDLER='' GIN_MODE=debug go run -tags migrate ./cmd/app

@@ -2,7 +2,7 @@
 
 ![Code coverage](https://whydah-github.s3.ap-southeast-1.amazonaws.com/xxx-codcov.svg)
 
-# Go Clean template
+# Whydah Go Clean template
 Clean Architecture template for Whydah Golang services, derived from [Go Clean Template](https://github.com/evrone/go-clean-template)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/evrone/go-clean-template)](https://goreportcard.com/report/github.com/evrone/go-clean-template)
@@ -42,6 +42,7 @@ Need to install these tools first:
 - [ ] Mock-test
 - [ ] Integration-test
 
+# Go Clean Template
 ## Content
 - [Quick start](#quick-start)
 - [Project structure](#project-structure)
