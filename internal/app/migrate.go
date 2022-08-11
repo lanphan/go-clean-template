@@ -34,7 +34,7 @@ func init() {
 	)
 
 	for attempts > 0 {
-		m, err = migrate.New("file://migrations", databaseURL)
+		m, err = migrate.New("file://db/migrations", databaseURL)
 		if err == nil {
 			break
 		}

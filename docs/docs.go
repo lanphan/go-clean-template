@@ -96,17 +96,17 @@ const docTemplate = `{
         "entity.User": {
             "type": "object",
             "properties": {
-                "claimStatus": {
-                    "type": "boolean"
-                },
                 "createdAt": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "reward": {
                     "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
                 },
                 "walletAddress": {
                     "type": "string"
@@ -125,7 +125,8 @@ const docTemplate = `{
                     "example": "0x321233"
                 },
                 "reward": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 100
                 }
             }
         },

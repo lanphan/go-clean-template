@@ -1,5 +1,7 @@
 ![Whydah Go Clean Template](docs/img/logo.svg)
 
+![Code coverage](https://whydah-github.s3.ap-southeast-1.amazonaws.com/xxx-codcov.svg)
+
 # Go Clean template
 Clean Architecture template for Whydah Golang services, derived from [Go Clean Template](https://github.com/evrone/go-clean-template)
 
@@ -27,6 +29,9 @@ Need to install these tools first:
    ```brew install hadolint```
 6. dotenv-linter tool
    ```brew install dotenv-linter```
+7. godepgraph tool ```go install github.com/kisielk/godepgraph```
+8. graphviz tool ```brew install graphviz```
+9. (optional) If you're using Colima instead of Docker Desktop, you need to export ```DOCKER_HOST``` in order to run test from *usecase* package
 
 ## What do we have in this template
 - [x] 1 Make script to run and provide other supports (document generation, lint, unit test ...)
@@ -46,7 +51,7 @@ Need to install these tools first:
 ## Quick start
 Local development:
 ```sh
-# Postgres
+# start Postgres
 $ make compose-up
 # Run app with migrations
 $ make run

@@ -3,13 +3,13 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres
+    image: postgres:14.4-alpine
     volumes:
       - pg-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: 'user'
       POSTGRES_PASSWORD: 'pass'
-      POSTGRES_DB: 'postgres'
+      POSTGRES_DB: 'xxx'
     ports:
       - 5432:5432
 
@@ -18,11 +18,12 @@ services:
     container_name: app
     image: app
     environment:
-      PG_DB_NAME: 'postgres'
+      PG_DB_NAME: 'xxx'
       PG_HOST: 'postgres'
       PG_PORT: '5432'
       PG_USER: 'user'
       PG_PASSWORD: 'pass'
+      PG_SSLMODE: 'disable'
     ports:
       - 8080:8080
     depends_on:

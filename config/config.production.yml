@@ -1,0 +1,23 @@
+# for production only
+
+# block /swagger
+# block /api/health
+# block /api/healthz
+
+# export GIN_MODE=release
+# export ENV_PROD=production
+# export PG_SSLMODE=verify-full (or PG_SSLMODE=require)
+# export AIRDROP_PRIVATE_KEY=.....
+
+app:
+  env: "production"
+
+logger:
+  # zap config level
+  log_level: "info"
+
+airdrop:
+  contract_address: "0xb91F0fdFfdDE4d6D53ac4066AcC32aA81fC6DE2C"
+  chain_id: 56
+  start: "2022-07-25T07:00:00.00Z"
+  end: "2022-08-03T17:00:00.00Z"

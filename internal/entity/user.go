@@ -16,20 +16,20 @@ type UserStore struct {
 
 // Users initializes a UserStore
 func Users(sess postgres.Postgres) *UserStore {
-	return &UserStore{sess.Collection("user")}
+	return &UserStore{sess.Collection("users")}
 }
 
 // User
 type User struct {
-	ID            uint      `db:"id,omitempty"`
+	ID            string    `db:"id,omitempty"`
 	WalletAddress string    `db:"wallet_address"`
 	Reward        uint      `db:"reward,omitempty"`
-	ClaimStatus   bool      `db:"claim_status,omitempty"`
 	CreatedAt     time.Time `db:"created_at,omitempty"`
+	UpdatedAt     time.Time `db:"updated_at,omitempty"`
 }
 
 func (user *User) Store(sess db.Session) db.Store {
-	return sess.Collection("user")
+	return sess.Collection("users")
 }
 
 func (user *User) ToRecord() db.Record {

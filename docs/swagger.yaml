@@ -2,14 +2,14 @@ basePath: /api/v1
 definitions:
   entity.User:
     properties:
-      claimStatus:
-        type: boolean
       createdAt:
         type: string
       id:
-        type: integer
+        type: string
       reward:
         type: integer
+      updatedAt:
+        type: string
       walletAddress:
         type: string
     type: object
@@ -19,6 +19,7 @@ definitions:
         example: "0x321233"
         type: string
       reward:
+        example: 100
         type: integer
     required:
     - address

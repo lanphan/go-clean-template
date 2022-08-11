@@ -11,7 +11,7 @@ jobs:
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@v2
         with:
-          golangci_lint_flags: "--timeout=10m"
+          golangci_lint_flags: "--timeout=5m --verbose"
 
   yamllint:
     name: runner / yamllint
@@ -60,22 +60,72 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: docker-practice/actions-setup-docker@master
+        with:
+          docker_version: "20.10"
       - uses: actions/setup-go@v3
         with:
-          go-version: 1.17
+          go-version: ~1.18
+      - name: Setup Golang caches
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-golang-
 
       - name: Unit Tests
-        run: "go test \
-          -v \
-          -race \
-          -covermode atomic \
-          -coverprofile=coverage.txt \
-          ./internal/..."
-      - name: Upload coverage report
-        run: bash <(curl -s https://codecov.io/bash)
+        run: |
+          CVPKG=$(go list ./... | grep -v mocks | tr '\n' ',')
+          go test -v -coverpkg=${CVPKG} -coverprofile=coverage.out -covermode=count  ./internal/...
 
-      - name: Integration tests
-        run: "docker-compose up \
-          --build \
-          --abort-on-container-exit \
-          --exit-code-from integration"
+      # - name: Create code coverage status for the current commit
+      #   run: |
+      #     curl "https://{GIT_USER}:${GIT_TOKEN}@api.github.com/repos/ironsail/krabots-airdrop-backend/statuses/${COMMIT_SHA}" -d "{\"state\": \"pending\",\"target_url\": \"https://github.com/ironsail/krabots-airdrop-backend/pull/${PULL_NUMBER}/checks?check_run_id=${RUN_ID}\",\"description\": \"in progress — This check has started... \",\"context\": \"runner / code-coverage\"}"
+      #   env:
+      #     GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      #     GIT_USER: ${{ secrets.GIT_USER }}
+      #     COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+      #     RUN_ID: ${{ github.run_id }}
+      #     PULL_NUMBER: ${{ github.event.pull_request.number }}
+
+      - name: Setup aws cli
+        uses: unfor19/install-aws-cli-action@v1.0.3
+
+      - name: Generate covarege Status
+        run: |
+          set -x
+
+          aws s3api head-object --bucket whydah-github  --key coverage.out  > /dev/null 2>&1 || not_exist=true
+          if [ $not_exist ]; then
+            prev_total=0
+          else
+            aws s3 cp s3://whydah-github/xxx-coverage.out coverage_prev.out
+            prev_total=`go tool cover -func=coverage_prev.out | grep total | grep -Eo '[0-9]+\.[0-9]+'`
+          fi
+
+          aws s3 cp coverage.out s3://whydah-github/xxx-coverage.out
+          total=`go tool cover -func=coverage.out | grep total | grep -Eo '[0-9]+\.[0-9]+'`
+          echo "total cov: $total"
+          echo "prev build cov: $prev_total"
+          (( $(echo "$total > $prev_total" | bc -l) )) && STATE=success || STATE=failure
+
+          if (( $(echo "$total <= 50" | bc -l) )) ; then
+            COLOR=red
+          elif (( $(echo "$total > 80" | bc -l) )); then
+            COLOR=green
+          else
+            COLOR=orange
+          fi
+          curl "https://img.shields.io/badge/coverage-$total%25-$COLOR" > badge.svg
+          aws s3 cp badge.svg s3://whydah-github/xxx-codcov.svg --acl public-read --cache-control no-cache
+
+        env:
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+          PULL_NUMBER: ${{ github.event.pull_request.number }}
+          RUN_ID: ${{ github.run_id }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}

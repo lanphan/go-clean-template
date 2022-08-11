@@ -2,7 +2,6 @@ package v1
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ironsail/whydah-go-clean-template/internal/entity"
@@ -51,7 +50,7 @@ func (r *userRoutes) list(c *gin.Context) {
 
 type createUserRequest struct {
 	WalletAddress string `json:"address"       binding:"required"  example:"0x321233"`
-	Reward        uint   `json:"reward"  binding:"required"  example:100`
+	Reward        uint   `json:"reward"        binding:"required"  example:"100"`
 }
 
 // @Summary     Create user
@@ -79,8 +78,6 @@ func (r *userRoutes) create(c *gin.Context) {
 		entity.User{
 			WalletAddress: request.WalletAddress,
 			Reward:        request.Reward,
-			ClaimStatus:   false,
-			CreatedAt:     time.Now().UTC(),
 		},
 	)
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/ironsail/whydah-go-clean-template/config"
 	"github.com/ironsail/whydah-go-clean-template/internal/entity"
 	"github.com/ironsail/whydah-go-clean-template/internal/usecase"
 	"github.com/ironsail/whydah-go-clean-template/pkg/postgres"
@@ -22,14 +23,16 @@ import (
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /api/v1
-func NewRouter(handler *gin.Engine, pg postgres.Postgres) {
+func NewRouter(handler *gin.Engine, cfg *config.Config, pg postgres.Postgres) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
 
 	// Swagger
-	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
-	handler.GET("/swagger/*any", swaggerHandler)
+	if cfg.App.Env != "production" {
+		swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
+		handler.GET("/swagger/*any", swaggerHandler)
+	}
 
 	// K8s probe
 	handler.GET("/api/healthz", func(c *gin.Context) { c.Status(http.StatusOK) })
