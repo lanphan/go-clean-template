@@ -78,3 +78,7 @@ test-coverage: ## test-coverage
 package-dependency: ## package-dependency
 	godepgraph -s -novendor -p golang.org/x,google.golang.org,github.com/swaggo,gopkg.in,github.com/jackc,github.com/ethereum,go.uber.org,github.com/gin-gonic,github.com/gin-contrib,github.com/bits-and-blooms,github.com/go-co-op,github.com/xuri,github.com/upper,github.com/ilyakaznacheev ./cmd/app | dot -Tpng -o godepgraph.png
 .PHONY: package-dependency
+
+size-analysis: ## check size of each package
+	goweight ./cmd/app
+.PHONY: size-analysis

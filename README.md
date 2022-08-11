@@ -29,9 +29,10 @@ Need to install these tools first:
    ```brew install hadolint```
 6. dotenv-linter tool
    ```brew install dotenv-linter```
-7. godepgraph tool ```go install github.com/kisielk/godepgraph```
-8. graphviz tool ```brew install graphviz```
-9. (optional) If you're using Colima instead of Docker Desktop, you need to export ```DOCKER_HOST``` in order to run test from *usecase* package
+7. godepgraph tool ```go install github.com/kisielk/godepgraph@latest```
+8. goweight tool ```go install github.com/jondot/goweight@latest```
+9. graphviz tool ```brew install graphviz```
+10. (optional) If you're using Colima instead of Docker Desktop, you need to export ```DOCKER_HOST``` in order to run test from *usecase* package
 
 ## What do we have in this template
 - [x] 1 Make script to run and provide other supports (document generation, lint, unit test ...)
