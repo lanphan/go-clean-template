@@ -7,7 +7,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/ilyakaznacheev/cleanenv v1.3.0
 	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe
-	github.com/swaggo/gin-swagger v1.5.1
+	github.com/swaggo/gin-swagger v1.5.2
 	github.com/swaggo/swag v1.8.4
 	github.com/upper/db/v4 v4.5.4
 	go.uber.org/zap v1.22.0
