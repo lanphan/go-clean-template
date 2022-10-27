@@ -1,7 +1,23 @@
 name: CI
-on: pull_request
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - 'releases/*'
 
 jobs:
+  check-email:
+    name: runner / check-email
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dguo/check-author-and-committer-action@v1
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          committer-email-regex: '@kardiachain\.io$'
+          author-email-regex: '@kardiachain\.io$'
+
   golangci-lint:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
