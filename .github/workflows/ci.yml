@@ -12,11 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: dguo/check-author-and-committer-action@v1.1.1
+      - uses: lan-phan/commit-author-committer-action@v1.3
         with:
-          github-token: ${{ secrets.TOKEN }}
-          committer-email-regex: '@kardiachain\.io$'
-          author-email-regex: '@kardiachain\.io$'
+          author_email_domain: 'kardiachain.io,users.noreply.github.com'
+          committer_email_domain: 'kardiachain.io'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          error_on_fail: 'true'
 
   golangci-lint:
     name: runner / golangci-lint
