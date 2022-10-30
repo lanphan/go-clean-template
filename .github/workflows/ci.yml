@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: lan-phan/commit-author-committer-action@v1.3
+      - uses: Lan-Phan/commit-author-email-action@v1.3
         with:
           author_email_domain: 'kardiachain.io,users.noreply.github.com'
           committer_email_domain: 'kardiachain.io'
