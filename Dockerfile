@@ -11,7 +11,7 @@ COPY . /app
 WORKDIR /app
 RUN apk update && apk add libc6-compat gcc g++
 RUN GOOS=linux GOARCH=amd64 \
-    go build -tags migrate -o /bin/app ./cmd/app
+    go build -tags migrate -o ./bin/app ./cmd/app
 
 # Step 3: Final
 #FROM scratch

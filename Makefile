@@ -30,7 +30,7 @@ swag-v1: ## swag init
 
 build: ## build binary file
 	GOOS=linux GOARCH=amd64 \
-    go build -tags migrate -o ./bin/app ./cmd/app
+    go build -ldflags="-s -w" -tags migrate -o ./bin/app ./cmd/app
 .PHONY: build
 
 run: swag-v1 ## swag then run

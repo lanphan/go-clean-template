@@ -1,0 +1,19 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+      - 'releases/*'
+
+jobs:
+  check-email:
+    name: runner / check-email
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: Lan-Phan/commit-author-email-action@v1.3
+        with:
+          author_email_domain: 'kardiachain.io,users.noreply.github.com'
+          committer_email_domain: 'kardiachain.io'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          error_on_fail: 'true'
