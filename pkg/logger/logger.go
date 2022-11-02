@@ -1,7 +1,6 @@
 package logger
 
 import (
-	"github.com/ironsail/whydah-go-clean-template/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -12,9 +11,9 @@ var singleton zap.Logger
 // This would be called from a main method when the application starts up
 // This function would ideally, take zap configuration, but is left out
 // in favor of simplicity using the example logger.
-func Init(cfg *config.Config) {
+func Init(logLevel string) {
 	// once ensures the singleton is initialized only once
-	zaplv, _ := zapcore.ParseLevel(cfg.Log.Level)
+	zaplv, _ := zapcore.ParseLevel(logLevel)
 
 	zapcfg := zap.Config{
 		Encoding:    "console",

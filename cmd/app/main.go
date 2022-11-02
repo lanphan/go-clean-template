@@ -16,7 +16,7 @@ func main() {
 	}
 
 	// Logger
-	logger.Init(cfg)
+	logger.Init(cfg.Log.Level)
 
 	// Run
 	app.Run(cfg)
