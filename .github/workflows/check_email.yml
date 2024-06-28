@@ -10,7 +10,7 @@ jobs:
     name: runner / check-email
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: Lan-Phan/commit-author-email-action@v1.3
         with:
           author_email_domain: 'kardiachain.io,users.noreply.github.com'
