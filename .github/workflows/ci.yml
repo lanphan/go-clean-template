@@ -108,7 +108,7 @@ jobs:
       #     PULL_NUMBER: ${{ github.event.pull_request.number }}
 
       - name: Setup aws cli
-        uses: unfor19/install-aws-cli-action@v1.0.3
+        uses: unfor19/install-aws-cli-action@v1.0.7
 
       - name: Generate covarege Status
         run: |
